@@ -25,7 +25,42 @@
             <p class="text-2xl">SérieScope</p>
         </div>
     </header>
-    
+    <main class="px-[5%] py-[3%]">
+        <section>
+                <div class="mb-5">
+                    <h1 class="text-[25px] font-bold">Explore les séries TV</h1>
+                    <p class="text-[12px] text-[#8290A2]">Retrouve tes séries préférées et enrichis le catalogue.</p>
+                </div>
+                <form class="bg-[#191919] p-5 border border-[#393939] rounded-lg leading-7" >
+                    <div class="mb-3" >
+                        <h3 id="form_title" class="text-[20px] font-medium">Ajouter une série</h3>
+                        <p class="text-[#8290A2] text-[10px]">Les champs marqués d’un * sont obligatoires.</p>
+                    </div>
+                    <div class="text-[11px] gap-3 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4">
+                        <div class="flex flex-col xl:col-span-2">
+                            <label class="mb-1">Nom de la série *</label>
+                            <input type="text"  id="seriesName" class="border border-[#393939] bg-[#191919] rounded-md px-1 py-2" placeholder="Ex. The Bear" required>
+                        </div>
+                        <div class="flex flex-col xl:col-span-2">
+                            <label class="mb-1">Genre(s) *</label>
+                            <input type="text"  id="genre" class="border border-[#393939] bg-[#191919] rounded-md px-1 py-2" placeholder="Ex. Drame, Comédie" required>
+                        </div>
+                        <div class="flex flex-col xl:col-span-4">
+                            <label  class="mb-1 text-[11px]"  for="description">
+                                Description *
+                            </label>
+                            <textarea class="border border-[#393939] bg-[#191919] rounded-md px-2 py-2 " id="description" name="description"  placeholder="Résume la série en quelques mots…"
+                                required></textarea>
+                        </div>
+                    </div>
+                    <div class="w-[100%] flex justify-start">
+                        <button id="submit" class= "bg-[white] text-[11px] w-[15%] text-black p-2 mt-3 rounded-lg">
+                            ＋ Ajouter la série
+                        </button>
+                    </div>
+                </form>
+            </section>
+    </main>
 
 
 
