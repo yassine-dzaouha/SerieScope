@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HelpDesk</title>
+
+    <!-- file css  -->
+    <link rel="stylesheet" href="css/style.css">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=IBM+Plex+Mono:ital,wght@0,100..700;1,100..700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+        rel="stylesheet">
+</head>
+
+<body class="text-[white]">
+    <header class="flex items-center justify-between pt-5 pb-5 pr-[5%] pl-[5%] bg"> 
+        <p class="">SérieScope</p>
+        <div class="md:hidden">
+            <i class="fa-solid fa-bars"></i>
+        </div>
+        <div>
+            <p class="text-[#8290A2] text-[12px] hidden md:block">Atlas Solutions / Support</p>
+        </div>
+    </header>
+    <!-- <main>
+        <section>
+            <div class="mb-5">
+                <h1 class="text-[25px] font-bold">Gestion des demandes</h1>
+                <p class="text-[12px] text-[#8290A2]">Suivez et gérez les incidents informatiques.</p>
+            </div>
+            <form class="bg-white p-5 rounded-lg" >
+                <div class="mb-3" >
+                    <h3 id="form_title" class="text-[20px] font-medium">Créer une demande</h3>
+                    <p class="text-[#8290A2] text-[10px]">Décrivez votre problème informatique.</p>
+                </div>
+                <div class="text-[11px] gap-3 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4">
+                    <div class="flex flex-col xl:col-span-2">
+                        <label class="mb-1">Titre du problème *</label>
+                        <input type="text"  id="probleme" class="border  border-[#D5DADF] rounded-md px-1 py-2 " placeholder="Connexion Wi-Fi instable" required>
+                    </div>
+                    <div class="flex flex-col">
+                        <label class="mb-1" for="">Catégorie *</label>
+                        <select class="border  border-[#D5DADF] rounded-md px-1 py-2 " id="category" name="category" required>
+                            <option value="Réseau" selected>Réseau</option>
+                            <option value="Matériel">Matériel</option>
+                            <option value="Logiciel">Logiciel</option>
+                        </select>
+                    </div>
+                    <div class="flex flex-col">
+                        <label class="mb-1" for="">Priorité *</label>
+                        <select class="border  border-[#D5DADF] rounded-md px-1 py-2 " id="priority" name="priority" required>
+                            <option value="Basse">Basse</option>
+                            <option value="Normale">Normale</option>
+                            <option value="Haute" selected>Haute</option>
+                        </select>
+                    </div>
+                    <div class="flex flex-col xl:col-span-4">
+                        <label  class="mb-1 text-[11px]"  for="description">
+                            Description *
+                        </label>
+                        <textarea class="resize-none  border border-[#D5DADF] rounded-md px-2 py-2 h-8" id="description" name="description" rows="4" placeholder="Décrivez votre problème..."
+                            required></textarea>
+                    </div>
+                </div>
+                <div class="w-[100%] flex justify-end">
+                    <button id="submit" class= "bg-[#202A38] text-[11px] w-[20%] text-white p-2 mt-3 rounded-lg">
+                        +  Ajouter la demande
+                    </button>
+                    <button id="modify" class="bg-[#202A38] hidden text-[11px] w-[20%] text-white p-2 mt-3 rounded-lg">
+                        -  modifier
+                    </button>
+                </div>
+            </form>
+        </section>
+    </main> -->
+</body>
