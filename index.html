@@ -54,12 +54,47 @@
                         </div>
                     </div>
                     <div class="w-[100%] flex justify-start">
-                        <button id="submit" class= "bg-[white] text-[11px] w-[15%] text-black p-2 mt-3 rounded-lg">
+                        <button id="submit" class= "bg-[white] text-[11px] w-[15%] text-black p-2 mt-3 rounded-lg ">
                             ＋ Ajouter la série
                         </button>
                     </div>
                 </form>
             </section>
+            <section aria-labelledby="catalogue_title" class="mt-10">
+                <div class="mb-3">
+                    <h2 id="catalogue_title" class="text-[20px] font-bold">Catalogue des séries</h2>
+                    <p class="text-[#8290A2] text-[12px]">Recherche par nom ou explore un genre.</p>
+                </div>
+    
+                <div class="bg-[#191919] border border-[#393939] rounded-lg p-4 grid grid-cols-1 md:grid-cols-[1fr_1fr_auto] gap-3 items-end">
+                    <div class="flex flex-col">
+                        <label for="searchInput" class="mb-1 text-[14px] font-bold">Rechercher une série</label>
+                        <input type="search" id="searchInput" placeholder="Ex. Breaking Bad"
+                            class="border border-[#393939] bg-[#191919] rounded-md px-2 py-2 text-[15px] focus:outline-none focus:ring-2 focus:ring-white">
+                    </div>
+    
+                    <div class="flex flex-col">
+                        <label for="genreFilter" class="mb-1 text-[14px] font-bold">Genre</label>
+                        <select id="genreFilter"
+                            class="border border-[#393939] bg-[#191919] rounded-md px-2 py-2 text-[15px] focus:outline-none focus:ring-2 focus:ring-white">
+                            <option value="all">Tous les genres</option>
+                        </select>
+                    </div>
+    
+                    <button type="button" id="resetBtn"
+                        class="border border-[#393939] bg-[#191919] rounded-md px-4 py-2 text-[15px] font-bold hover:bg-[#252525] focus:outline-none focus:ring-2 focus:ring-white">
+                        <i class="fa-solid fa-rotate-right mr-1"></i> Réinitialiser
+                    </button>
+                </div>
+    
+                <p id="resultCount" class="text-[#8290A2] text-[12px] mt-4 mb-3" aria-live="polite"></p>
+                <p id="errorMessage" class="text-red-400 text-[15px] hidden" role="alert"></p>
+                <p id="emptyMessage" class="text-[#8290A2] text-[15px] hidden">Aucune série trouvée.</p>
+    
+                <div id="articles" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+
+                </div>
+        </section>
     </main>
 
 
@@ -68,7 +103,8 @@
 
 
 
-
+    <script src="script.js"></script>
 
    
 </body>
+</html>
