@@ -1,6 +1,7 @@
 let series = [];
 
 const errorMessage = document.getElementById("errorMessage");
+const articles = document.getElementById("articles");
 
 const saved = localStorage.getItem("series");
 
@@ -25,4 +26,58 @@ if (saved) {
         })
 }
 
-const articles = document.getElementById("articles");
+
+function showSeries(liste) {
+    articles.textContent = "";
+    
+    liste.forEach((serie) => {
+        const article = createEl(
+            "article",
+            "bg-[#191919] border border-[#393939] rounded-lg overflow-hidden flex flex-col"
+        );
+        
+        const image = createEl("img", "w-full aspect-[4/3] object-cover bg-[#252525]");
+        image.alt = "Affiche de " + serie.name;
+        if (serie.image) {
+            image.src = serie.image.medium;
+        }
+
+        const corps = createEl("div", "p-3 flex flex-col gap-2 flex-1");
+        
+        const titre = createEl("h3", "font-bold text-[16px]", serie.name);
+        
+        
+        const genres = createEl("div", "flex flex-wrap gap-1");
+        serie.genres.forEach((genre) => {
+            const badge = createEl(
+                "span",
+                "text-[11px] px-2 py-0.5 border border-[#393939] rounded-full bg-[#252525]",
+                genre
+            );
+            genres.append(badge);
+        });
+        const meta = createEl(
+            "p",
+            "line-clamp-2 text-[#8290A2] text-[12px]"
+        );
+        meta.innerHTML = serie.summary;
+        
+        corps.append(titre, genres,meta);
+        article.append(image, corps);
+        articles.append(article);
+    });
+}
+
+
+function createEl(tag, classes, text) {
+    const element = document.createElement(tag);
+    element.className = classes;
+    if (text) {
+        element.textContent = text;
+    }
+    return element;
+}
+
+
+
+

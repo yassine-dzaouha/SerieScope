@@ -36,14 +36,23 @@
                         <h3 id="form_title" class="text-[20px] font-medium">Ajouter une série</h3>
                         <p class="text-[#8290A2] text-[10px]">Les champs marqués d’un * sont obligatoires.</p>
                     </div>
-                    <div class="text-[11px] gap-3 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4">
-                        <div class="flex flex-col xl:col-span-2">
+                    <div class="text-[11px] gap-3 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
+                        <div class="flex flex-col xl:col-span-1">
                             <label class="mb-1">Nom de la série *</label>
                             <input type="text"  id="seriesName" class="border border-[#393939] bg-[#191919] rounded-md px-1 py-2" placeholder="Ex. The Bear" required>
                         </div>
-                        <div class="flex flex-col xl:col-span-2">
+                        <div class="flex flex-col xl:col-span-1">
                             <label class="mb-1">Genre(s) *</label>
                             <input type="text"  id="genre" class="border border-[#393939] bg-[#191919] rounded-md px-1 py-2" placeholder="Ex. Drame, Comédie" required>
+                        </div>
+                        <div class="flex flex-col xl:col-span-1">
+                            <label for="seriesImage" class="mb-1">image *</label>
+                            <input type="file" id="seriesImage" name="seriesImage" accept="image/*"
+                                aria-describedby="seriesImageError"
+                                class="border border-[#393939] bg-[#191919] rounded-md px-2 py-2 text-[14px] font-normal
+                                    file:mr-3 file:rounded-md file:border-0 file:bg-white file:px-3 file:py-1 file:text-black
+                                    focus:outline-none focus:ring-2 focus:ring-white">
+                            <p id="seriesImageError" class="text-red-400 text-[12px] font-normal min-h-[18px]" role="alert"></p>
                         </div>
                         <div class="flex flex-col xl:col-span-4">
                             <label  class="mb-1 text-[11px]"  for="description">
@@ -53,8 +62,8 @@
                                 required></textarea>
                         </div>
                     </div>
-                    <div class="w-[100%] flex justify-start">
-                        <button id="submit" class= "bg-[white] text-[11px] w-[15%] text-black p-2 mt-3 rounded-lg ">
+                    <div class=" flex justify-start">
+                        <button id="submit" class= "bg-[white] text-[11px]  text-black p-2 mt-3 rounded-lg ">
                             ＋ Ajouter la série
                         </button>
                     </div>
