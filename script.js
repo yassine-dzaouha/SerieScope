@@ -78,6 +78,51 @@ function createEl(tag, classes, text) {
     return element;
 }
 
+const form = document.querySelector("form");
+const nameInput = document.getElementById("seriesName");
+const genreInput = document.getElementById("seriesGenre");
+const imageInput = document.getElementById("seriesImage");
+
+const nameError = document.getElementById("seriesNameError");
+const genreError = document.getElementById("seriesGenreError");
+const imageError = document.getElementById("seriesImageError");
+const formMessage = document.getElementById("formMessage");
+
+function validateForm() {
+    nameError.textContent = "";
+    genreError.textContent = "";
+    imageError.textContent = "";
+    formMessage.textContent = "";
+
+    let isValid = true;
+
+    const title = nameInput.value.trim();
+    const genre = genreInput.value.trim();
+    const file = imageInput.value;
+
+    if (title === "") {
+        nameError.textContent = "Le titre est obligatoire.";
+        isValid = false;
+    }
+
+    if (language === "") {
+        languageError.textContent = "La langue est obligatoire.";
+        isValid = false;
+    }
+
+    if (genre === "") {
+        genreError.textContent = "Le genre est obligatoire.";
+        isValid = false;
+    }
+
+    if (file && !file.type.startsWith("image/")) {
+        imageError.textContent = "Le fichier doit être une image.";
+        isValid = false;
+    }
+
+    return isValid;
+}
+
 
 
 
