@@ -8,7 +8,7 @@ let page_actuelle = document.getElementById("page-actuelle");
 let btn_precedent = document.getElementById("btn-precedent");
 let btn_suivant = document.getElementById("btn-suivant");
 
-if(!localStorage.getItem("key")){
+if(!localStorage.getItem("page")){
     localStorage.setItem("page",1);
 }
 let page = Number(localStorage.getItem("page"));
@@ -98,11 +98,13 @@ function showSeries(liste) {
 
 btn_suivant.addEventListener("click", () => {
     page++;
+    localStorage.setItem("page",page)
     showSeries(series);
 });
 
 btn_precedent.addEventListener("click", () => {
     page--;
+    localStorage.setItem("page",page)
     showSeries(series);
 });
 
@@ -186,7 +188,23 @@ function addSerie(){
     showSeries(series);
 }
 
+let searchInput = document.getElementById("searchInput");
 
+function applyFilters() {
+    const text = searchInput.value.trim().toLowerCase();
+    
+    let filteredSeries = series.filter((serie) => {
+        return (serie.name || "").toLowerCase().includes(text);
+    });
+
+    showSeries(filteredSeries);
+    return filteredSeries;
+}
+
+searchInput.addEventListener("input", () => {
+    page = 1; 
+    applyFilters();
+});
 
 
 
