@@ -2,20 +2,28 @@ let series = [];
 
 const errorMessage = document.getElementById("errorMessage");
 const articles = document.getElementById("articles");
+const emptyMessage = document.getElementById("emptyMessage");
+const pagination = document.getElementById("pagination");
+let page_actuelle = document.getElementById("page-actuelle");
+let btn_precedent = document.getElementById("btn-precedent");
+let btn_suivant = document.getElementById("btn-suivant");
+
+if(!localStorage.getItem("key")){
+    localStorage.setItem("page",1);
+}
+let page = Number(localStorage.getItem("page"));
 
 const saved = localStorage.getItem("series");
-
 if (saved) {
     series = JSON.parse(saved);
     showSeries(series);
 } else {
-
     fetch("https://api.tvmaze.com/shows?page=0")
         .then((response) => {
             return response.json();
         })
         .then((data) => {
-            series = data.slice(0, 20);
+            series = data;
         })
         .catch((error) => {
             errorMessage.textContent =
@@ -26,11 +34,30 @@ if (saved) {
         showSeries(series);
 }
 
-
 function showSeries(liste) {
     articles.textContent = "";
-    
-    liste.forEach((serie) => {
+
+    if (liste.length === 0) {
+        emptyMessage.hidden = false;
+        pagination.hidden = true;
+        return;
+    }
+
+    emptyMessage.hidden = true;
+
+    let total_pages = Math.ceil(liste.length / 15);
+    let debut = (page - 1) * 15;
+    let fin = debut + 15;
+    let pageOfSeries = liste.slice(debut, fin);
+
+    pagination.hidden = total_pages <= 1;
+
+    page_actuelle.textContent = `Page ${page} sur ${total_pages}`;
+
+    btn_precedent.hidden = page === 1;
+    btn_suivant.hidden = page === total_pages;
+
+    pageOfSeries.forEach((serie) => {
         const article = createEl(
             "article",
             "bg-[#191919] border border-[#393939] rounded-lg overflow-hidden flex flex-col"
@@ -68,6 +95,15 @@ function showSeries(liste) {
     });
 }
 
+btn_suivant.addEventListener("click", () => {
+    page++;
+    showSeries(series);
+});
+
+btn_precedent.addEventListener("click", () => {
+    page--;
+    showSeries(series);
+});
 
 function createEl(tag, classes, text) {
     const element = document.createElement(tag);
@@ -88,13 +124,11 @@ const nameError = document.getElementById("seriesNameError");
 const genreError = document.getElementById("seriesGenreError");
 const imageError = document.getElementById("seriesImageError");
 const descError = document.getElementById("seriesDescriptionError");
-// const formMessage = document.getElementById("formMessage");
 
 function validateForm() {
     nameError.textContent = "";
     genreError.textContent = "";
     imageError.textContent = "";
-    // formMessage.textContent = "";
 
     let isValid = true;
 
@@ -148,4 +182,3 @@ function addSerie(){
     localStorage.setItem("series", JSON.stringify(series));
     showSeries(series);
 }
-
