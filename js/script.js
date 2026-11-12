@@ -24,14 +24,15 @@ if (saved) {
         })
         .then((data) => {
             series = data;
+            localStorage.setItem("series", JSON.stringify(series));
+            showSeries(series);
         })
         .catch((error) => {
             errorMessage.textContent =
                 "Impossible de charger le catalogue. Réessaie plus tard.";
             console.error(error);
         })
-        localStorage.setItem("series", JSON.stringify(series));
-        showSeries(series);
+        
 }
 
 function showSeries(liste) {
@@ -171,9 +172,11 @@ function addSerie(){
         return;
     }
     let newSerie = {};
+    newSerie.id = Date.now();
     newSerie.name = nameInput.value.trim();
     newSerie.genres = [genreInput.value.trim()];
     newSerie.image = { medium: URL.createObjectURL(imageInput.files[0]) }
+    // newSerie.image = pictureData ? { medium: pictureData } : null;
     newSerie.summary = descInput.value.trim();
 
     console.log(newSerie);
@@ -182,3 +185,44 @@ function addSerie(){
     localStorage.setItem("series", JSON.stringify(series));
     showSeries(series);
 }
+
+
+
+
+
+
+
+
+
+// let pictureData = null; // the picture as text, or null if none
+
+// // Shrinks the picture so localStorage doesn't fill up
+// function resizeImage(dataUrl, maxWidth, callback) {
+//     const img = new Image();
+//     img.onload = () => {
+//         const scale = Math.min(1, maxWidth / img.width);
+//         const canvas = document.createElement("canvas");
+//         canvas.width = img.width * scale;
+//         canvas.height = img.height * scale;
+//         canvas.getContext("2d").drawImage(img, 0, 0, canvas.width, canvas.height);
+//         callback(canvas.toDataURL("image/jpeg", 0.7));
+//     };
+//     img.src = dataUrl;
+// }
+
+// imageInput.addEventListener("change", function () {
+//     const file = this.files[0];
+//     pictureData = null; // reset in case the user changes or cancels
+
+//     if (!file || !file.type.startsWith("image/")) {
+//         return; // validateForm shows the error for a wrong type
+//     }
+
+//     const reader = new FileReader();
+//     reader.onload = function (e) {
+//         resizeImage(e.target.result, 400, (smallPicture) => {
+//             pictureData = smallPicture;
+//         });
+//     };
+//     reader.readAsDataURL(file);
+// });
