@@ -16,14 +16,14 @@ if (saved) {
         })
         .then((data) => {
             series = data.slice(0, 20);
-            localStorage.setItem("series", JSON.stringify(series));
-            showSeries(series);
         })
         .catch((error) => {
             errorMessage.textContent =
                 "Impossible de charger le catalogue. Réessaie plus tard.";
             console.error(error);
         })
+        localStorage.setItem("series", JSON.stringify(series));
+        showSeries(series);
 }
 
 
@@ -56,13 +56,13 @@ function showSeries(liste) {
             );
             genres.append(badge);
         });
-        const meta = createEl(
+        const desc = createEl(
             "p",
             "line-clamp-2 text-[#8290A2] text-[12px]"
         );
-        meta.innerHTML = serie.summary;
+        desc.innerHTML = serie.summary;
         
-        corps.append(titre, genres,meta);
+        corps.append(titre, genres,desc);
         article.append(image, corps);
         articles.append(article);
     });
@@ -82,31 +82,29 @@ const form = document.querySelector("form");
 const nameInput = document.getElementById("seriesName");
 const genreInput = document.getElementById("seriesGenre");
 const imageInput = document.getElementById("seriesImage");
+const descInput = document.getElementById("description");
 
 const nameError = document.getElementById("seriesNameError");
 const genreError = document.getElementById("seriesGenreError");
 const imageError = document.getElementById("seriesImageError");
-const formMessage = document.getElementById("formMessage");
+const descError = document.getElementById("seriesDescriptionError");
+// const formMessage = document.getElementById("formMessage");
 
 function validateForm() {
     nameError.textContent = "";
     genreError.textContent = "";
     imageError.textContent = "";
-    formMessage.textContent = "";
+    // formMessage.textContent = "";
 
     let isValid = true;
 
     const title = nameInput.value.trim();
     const genre = genreInput.value.trim();
-    const file = imageInput.value;
+    const file = imageInput.files[0];
+    const desc = descInput.value.trim();
 
     if (title === "") {
         nameError.textContent = "Le titre est obligatoire.";
-        isValid = false;
-    }
-
-    if (language === "") {
-        languageError.textContent = "La langue est obligatoire.";
         isValid = false;
     }
 
@@ -120,9 +118,34 @@ function validateForm() {
         isValid = false;
     }
 
+    if (desc === "") {
+        descError.textContent = "La description est obligatoire.";
+        isValid = false;
+    }
+
     return isValid;
 }
 
+form.addEventListener("submit", (event) => {
+    event.preventDefault(); 
+    console.log(imageInput.files[0]);
+    addSerie();
+});
 
+function addSerie(){
+    if (!validateForm()) {
+        return;
+    }
+    let newSerie = {};
+    newSerie.name = nameInput.value.trim();
+    newSerie.genres = [genreInput.value.trim()];
+    newSerie.image = { medium: URL.createObjectURL(imageInput.files[0]) }
+    newSerie.summary = descInput.value.trim();
 
+    console.log(newSerie);
+    series.unshift(newSerie);
+    form.reset();
+    localStorage.setItem("series", JSON.stringify(series));
+    showSeries(series);
+}
 
