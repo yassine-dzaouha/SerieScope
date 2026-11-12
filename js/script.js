@@ -7,6 +7,8 @@ const pagination = document.getElementById("pagination");
 let page_actuelle = document.getElementById("page-actuelle");
 let btn_precedent = document.getElementById("btn-precedent");
 let btn_suivant = document.getElementById("btn-suivant");
+let resultCount = document.getElementById("resultCount");
+let genreFilter = document.getElementById("genreFilter")
 
 if(!localStorage.getItem("page")){
     localStorage.setItem("page",1);
@@ -57,7 +59,7 @@ function showSeries(liste) {
 
     btn_precedent.hidden = page === 1;
     btn_suivant.hidden = page === total_pages;
-
+    resultCount.textContent = `${pageOfSeries.length} séries affichées`
     pageOfSeries.forEach((serie) => {
         const article = createEl(
             "article",
@@ -93,6 +95,7 @@ function showSeries(liste) {
         corps.append(titre, genres,desc);
         article.append(image, corps);
         articles.append(article);
+        AppendGenres();
     });
 }
 
@@ -115,6 +118,33 @@ function createEl(tag, classes, text) {
         element.textContent = text;
     }
     return element;
+}
+
+function GetGenres() {
+    const AllGenres = [];
+    series.forEach((serie)=> serie.genres.forEach((genre) => {
+        if (!AllGenres.includes(genre)){
+            AllGenres.push(genre);
+        } 
+    }))
+    return AllGenres;
+}
+
+function AppendGenres() {
+    genreFilter.textContent = "";
+
+    const TousOption = document.createElement("option");
+    TousOption.textContent = "Tous les genres";
+    TousOption.value = "all";
+    genreFilter.append(TousOption);
+
+    // const AllGenre = GetGenres();
+    GetGenres().forEach(genre => {
+        const option = document.createElement("option");
+        option.value = genre;
+        option.textContent = genre;
+        genreFilter.append(option);
+    })
 }
 
 const form = document.querySelector("form");
