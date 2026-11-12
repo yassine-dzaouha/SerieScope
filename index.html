@@ -39,11 +39,13 @@
                     <div class="text-[11px] gap-3 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
                         <div class="flex flex-col xl:col-span-1">
                             <label class="mb-1">Nom de la série *</label>
-                            <input type="text"  id="seriesName" class="border border-[#393939] bg-[#191919] rounded-md px-1 py-2" placeholder="Ex. The Bear" required>
+                            <input type="text"  id="seriesName" class="border border-[#393939] bg-[#191919] rounded-md px-1 py-2" placeholder="Ex. The Bear">
+                            <p id="seriesNameError" class="text-red-400 text-[12px] font-normal min-h-[18px]" role="alert"></p>
                         </div>
                         <div class="flex flex-col xl:col-span-1">
                             <label class="mb-1">Genre(s) *</label>
-                            <input type="text"  id="genre" class="border border-[#393939] bg-[#191919] rounded-md px-1 py-2" placeholder="Ex. Drame, Comédie" required>
+                            <input type="text"  id="seriesGenre" class="border border-[#393939] bg-[#191919] rounded-md px-1 py-2" placeholder="Ex. Drame, Comédie">
+                            <p id="seriesGenreError" class="text-red-400 text-[12px] font-normal min-h-[18px]" role="alert"></p>
                         </div>
                         <div class="flex flex-col xl:col-span-1">
                             <label for="seriesImage" class="mb-1">image *</label>
@@ -58,8 +60,8 @@
                             <label  class="mb-1 text-[11px]"  for="description">
                                 Description *
                             </label>
-                            <textarea class="border border-[#393939] bg-[#191919] rounded-md px-2 py-2 " id="description" name="description"  placeholder="Résume la série en quelques mots…"
-                                required></textarea>
+                            <textarea class="border border-[#393939] bg-[#191919] rounded-md px-2 py-2 " id="description" name="description"  placeholder="Résume la série en quelques mots…"></textarea>
+                            <p id="seriesDescriptionError" class="text-red-400 text-[12px] font-normal min-h-[18px]" role="alert"></p>
                         </div>
                     </div>
                     <div class=" flex justify-start">
