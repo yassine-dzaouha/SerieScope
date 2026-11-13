@@ -4,10 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HelpDesk</title>
+    <title>SérieScope</title>
 
     <!-- file css  -->
-    <link rel="stylesheet" href="css/style.css">
 
     <script src="https://cdn.tailwindcss.com"></script>
 
@@ -19,65 +18,115 @@
         rel="stylesheet">
 </head>
 
-<body class="text-[white]">
-    <header class="flex items-center justify-between pt-5 pb-5 pr-[5%] pl-[5%] bg"> 
-        <p class="">SérieScope</p>
-        <div class="md:hidden">
-            <i class="fa-solid fa-bars"></i>
-        </div>
-        <div>
-            <p class="text-[#8290A2] text-[12px] hidden md:block">Atlas Solutions / Support</p>
+<body class="text-[white] bg-[#111010] ">
+    <header class="flex items-center justify-between pt-5 pb-5 px-[5%] bg-[#080808]"> 
+        <div class="flex gap-5 items-center">
+            <span class="bg-[white] px-2 py-1 rounded-lg"><i class="fa-solid fa-film" style="color: rgb(0, 0, 0);"></i></span>
+            <p class="text-2xl">SérieScope</p>
         </div>
     </header>
-    <!-- <main>
+    <main class="px-[5%] py-[3%]">
         <section>
-            <div class="mb-5">
-                <h1 class="text-[25px] font-bold">Gestion des demandes</h1>
-                <p class="text-[12px] text-[#8290A2]">Suivez et gérez les incidents informatiques.</p>
-            </div>
-            <form class="bg-white p-5 rounded-lg" >
-                <div class="mb-3" >
-                    <h3 id="form_title" class="text-[20px] font-medium">Créer une demande</h3>
-                    <p class="text-[#8290A2] text-[10px]">Décrivez votre problème informatique.</p>
+                <div class="mb-5">
+                    <h1 class="text-[25px] font-bold">Explore les séries TV</h1>
+                    <p class="text-[12px] text-[#8290A2]">Retrouve tes séries préférées et enrichis le catalogue.</p>
                 </div>
-                <div class="text-[11px] gap-3 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4">
-                    <div class="flex flex-col xl:col-span-2">
-                        <label class="mb-1">Titre du problème *</label>
-                        <input type="text"  id="probleme" class="border  border-[#D5DADF] rounded-md px-1 py-2 " placeholder="Connexion Wi-Fi instable" required>
+                <form class="bg-[#191919] p-5 border border-[#393939] rounded-lg leading-7" >
+                    <div class="mb-3" >
+                        <h3 id="form_title" class="text-[20px] font-medium">Ajouter une série</h3>
+                        <p class="text-[#8290A2] text-[10px]">Les champs marqués d’un * sont obligatoires.</p>
                     </div>
+                    <div class="text-[11px] gap-3 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
+                        <div class="flex flex-col xl:col-span-1">
+                            <label class="mb-1">Nom de la série *</label>
+                            <input type="text"  id="seriesName" class="border border-[#393939] bg-[#191919] rounded-md px-1 py-2" placeholder="Ex. The Bear">
+                            <p id="seriesNameError" class="text-red-400 text-[12px] font-normal min-h-[18px]" role="alert"></p>
+                        </div>
+                        <div class="flex flex-col xl:col-span-1">
+                            <label class="mb-1">Genre(s) *</label>
+                            <input type="text"  id="seriesGenre" class="border border-[#393939] bg-[#191919] rounded-md px-1 py-2" placeholder="Ex. Drame, Comédie">
+                            <p id="seriesGenreError" class="text-red-400 text-[12px] font-normal min-h-[18px]" role="alert"></p>
+                        </div>
+                        <div class="flex flex-col xl:col-span-1">
+                            <label for="seriesImage" class="mb-1">image *</label>
+                            <input type="file" id="seriesImage" name="seriesImage" accept="image/*"
+                                aria-describedby="seriesImageError"
+                                class="border border-[#393939] bg-[#191919] rounded-md px-2 py-2 text-[14px] font-normal
+                                    file:mr-3 file:rounded-md file:border-0 file:bg-white file:px-3 file:py-1 file:text-black
+                                    focus:outline-none focus:ring-2 focus:ring-white">
+                            <p id="seriesImageError" class="text-red-400 text-[12px] font-normal min-h-[18px]" role="alert"></p>
+                        </div>
+                        <div class="flex flex-col xl:col-span-4">
+                            <label  class="mb-1 text-[11px]"  for="description">
+                                Description *
+                            </label>
+                            <textarea class="border border-[#393939] bg-[#191919] rounded-md px-2 py-2 " id="description" name="description"  placeholder="Résume la série en quelques mots…"></textarea>
+                            <p id="seriesDescriptionError" class="text-red-400 text-[12px] font-normal min-h-[18px]" role="alert"></p>
+                        </div>
+                    </div>
+                    <div class=" flex justify-start">
+                        <button id="submit" class= "bg-[white] text-[11px]  text-black p-2 mt-3 rounded-lg ">
+                            ＋ Ajouter la série
+                        </button>
+                    </div>
+                </form>
+            </section>
+            <section aria-labelledby="catalogue_title" class="mt-10">
+                <div class="mb-3">
+                    <h2 id="catalogue_title" class="text-[20px] font-bold">Catalogue des séries</h2>
+                    <p class="text-[#8290A2] text-[12px]">Recherche par nom ou explore un genre.</p>
+                </div>
+    
+                <div class="bg-[#191919] border border-[#393939] rounded-lg p-4 grid grid-cols-1 md:grid-cols-[1fr_1fr_auto] gap-3 items-end">
                     <div class="flex flex-col">
-                        <label class="mb-1" for="">Catégorie *</label>
-                        <select class="border  border-[#D5DADF] rounded-md px-1 py-2 " id="category" name="category" required>
-                            <option value="Réseau" selected>Réseau</option>
-                            <option value="Matériel">Matériel</option>
-                            <option value="Logiciel">Logiciel</option>
+                        <label for="searchInput" class="mb-1 text-[14px] font-bold">Rechercher une série</label>
+                        <input type="search" id="searchInput" placeholder="Ex. Breaking Bad"
+                            class="border border-[#393939] bg-[#191919] rounded-md px-2 py-2 text-[15px] focus:outline-none focus:ring-2 focus:ring-white">
+                    </div>
+    
+                    <div class="flex flex-col">
+                        <label for="genreFilter" class="mb-1 text-[14px] font-bold">Genre</label>
+                        <select id="genreFilter"
+                            class="border border-[#393939] bg-[#191919] rounded-md px-2 py-2 text-[15px] focus:outline-none focus:ring-2 focus:ring-white">
+                            <option value="all">Tous les genres</option>
                         </select>
                     </div>
-                    <div class="flex flex-col">
-                        <label class="mb-1" for="">Priorité *</label>
-                        <select class="border  border-[#D5DADF] rounded-md px-1 py-2 " id="priority" name="priority" required>
-                            <option value="Basse">Basse</option>
-                            <option value="Normale">Normale</option>
-                            <option value="Haute" selected>Haute</option>
-                        </select>
-                    </div>
-                    <div class="flex flex-col xl:col-span-4">
-                        <label  class="mb-1 text-[11px]"  for="description">
-                            Description *
-                        </label>
-                        <textarea class="resize-none  border border-[#D5DADF] rounded-md px-2 py-2 h-8" id="description" name="description" rows="4" placeholder="Décrivez votre problème..."
-                            required></textarea>
-                    </div>
-                </div>
-                <div class="w-[100%] flex justify-end">
-                    <button id="submit" class= "bg-[#202A38] text-[11px] w-[20%] text-white p-2 mt-3 rounded-lg">
-                        +  Ajouter la demande
-                    </button>
-                    <button id="modify" class="bg-[#202A38] hidden text-[11px] w-[20%] text-white p-2 mt-3 rounded-lg">
-                        -  modifier
+    
+                    <button type="button" id="resetBtn"
+                        class="border border-[#393939] bg-[#191919] rounded-md px-4 py-2 text-[15px] font-bold hover:bg-[#252525] focus:outline-none focus:ring-2 focus:ring-white">
+                        <i class="fa-solid fa-rotate-right mr-1"></i> Réinitialiser
                     </button>
                 </div>
-            </form>
+    
+                <p id="resultCount" class="text-[#8290A2] text-[12px] mt-4 mb-3" aria-live="polite"></p>
+                <p id="errorMessage" class="text-red-400 text-[15px] hidden" role="alert"></p>
+                <p id="emptyMessage" class="text-[#8290A2] text-[15px] hidden">Aucune série trouvée.</p>
+    
+                <div id="articles" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+
+                </div>
+                <div id="pagination" class="flex flex-wrap items-center justify-between gap-3 mt-8" hidden>
+                    <button id="btn-precedent" type="button" class="bg-[#242424] border border-[#383838] rounded-md px-4 py-2 text-sm">
+                        Précédent
+                    </button>
+
+                    <p id="page-actuelle" class="text-[#AAAAAA] text-sm"></p>
+
+                    <button id="btn-suivant" type="button" class="bg-[#242424] border border-[#383838] rounded-md px-4 py-2 text-sm">
+                        Suivant
+                    </button>
+                </div>
         </section>
-    </main> -->
+    </main>
+
+
+
+
+
+
+
+    <script src="js/script.js"></script>
+
+   
 </body>
+</html>
