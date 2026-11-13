@@ -10,10 +10,11 @@ let btn_suivant = document.getElementById("btn-suivant");
 let resultCount = document.getElementById("resultCount");
 let genreFilter = document.getElementById("genreFilter")
 
-if(!localStorage.getItem("page")){
-    localStorage.setItem("page",1);
-}
-let page = Number(localStorage.getItem("page"));
+// if(!localStorage.getItem("page")){
+//     localStorage.setItem("page",1);
+// }
+// let page = Number(localStorage.getItem("page"));
+let page = 1;
 
 const saved = localStorage.getItem("series");
 if (saved) {
@@ -101,13 +102,13 @@ function showSeries(liste) {
 
 btn_suivant.addEventListener("click", () => {
     page++;
-    localStorage.setItem("page",page)
+    // localStorage.setItem("page",page)
     showSeries(series);
 });
 
 btn_precedent.addEventListener("click", () => {
     page--;
-    localStorage.setItem("page",page)
+    // localStorage.setItem("page",page)
     showSeries(series);
 });
 
@@ -220,57 +221,43 @@ function addSerie(){
 
 let searchInput = document.getElementById("searchInput");
 
-function applyFilters() {
+function applySearch() {
     const text = searchInput.value.trim().toLowerCase();
     
     let filteredSeries = series.filter((serie) => {
         return (serie.name || "").toLowerCase().includes(text);
     });
-
-    showSeries(filteredSeries);
     return filteredSeries;
 }
 
 searchInput.addEventListener("input", () => {
     page = 1; 
-    applyFilters();
+    let filtredArr = applySearch();
+    filtredArr = applyFilter(filtredArr);
+    showSeries(filtredArr);
+});
+
+function applyFilter(filtredArr) {
+    const genre = genreFilter.value;
+    let filteredSeries;
+
+    if (genre === "all") {
+        filteredSeries = filtredArr;
+    } else {
+        filteredSeries = filtredArr.filter((serie) => serie.genres.includes(genre));
+    }
+    return filteredSeries;
+}
+
+genreFilter.addEventListener("change", () => {
+    page = 1; 
+    let filtredArr = applySearch();
+    filtredArr = applyFilter(filtredArr);
+    showSeries(filtredArr);
 });
 
 
 
 
 
-
-
-// let pictureData = null; // the picture as text, or null if none
-
-// // Shrinks the picture so localStorage doesn't fill up
-// function resizeImage(dataUrl, maxWidth, callback) {
-//     const img = new Image();
-//     img.onload = () => {
-//         const scale = Math.min(1, maxWidth / img.width);
-//         const canvas = document.createElement("canvas");
-//         canvas.width = img.width * scale;
-//         canvas.height = img.height * scale;
-//         canvas.getContext("2d").drawImage(img, 0, 0, canvas.width, canvas.height);
-//         callback(canvas.toDataURL("image/jpeg", 0.7));
-//     };
-//     img.src = dataUrl;
-// }
-
-// imageInput.addEventListener("change", function () {
-//     const file = this.files[0];
-//     pictureData = null; // reset in case the user changes or cancels
-
-//     if (!file || !file.type.startsWith("image/")) {
-//         return; // validateForm shows the error for a wrong type
-//     }
-
-//     const reader = new FileReader();
-//     reader.onload = function (e) {
-//         resizeImage(e.target.result, 400, (smallPicture) => {
-//             pictureData = smallPicture;
-//         });
-//     };
-//     reader.readAsDataURL(file);
-// });
+ 
