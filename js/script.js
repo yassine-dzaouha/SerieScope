@@ -256,8 +256,10 @@ genreFilter.addEventListener("change", () => {
     showSeries(filtredArr);
 });
 
-
-
-
-
+document.getElementById("resetBtn").addEventListener("click", () => {
+    searchInput.value = "";
+    genreFilter.value = "all";
+    page = 1;
+    showSeries(series);
+});
  
