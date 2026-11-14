@@ -10,11 +10,14 @@ let btn_suivant = document.getElementById("btn-suivant");
 let resultCount = document.getElementById("resultCount");
 let genreFilter = document.getElementById("genreFilter")
 
+
 // if(!localStorage.getItem("page")){
 //     localStorage.setItem("page",1);
 // }
 // let page = Number(localStorage.getItem("page"));
+
 let page = 1;
+let pictureData = null;
 
 const saved = localStorage.getItem("series");
 if (saved) {
@@ -31,11 +34,9 @@ if (saved) {
             showSeries(series);
         })
         .catch((error) => {
-            errorMessage.textContent =
-                "Impossible de charger le catalogue. Réessaie plus tard.";
+            errorMessage.textContent = "Impossible de charger le catalogue. Réessaie plus tard.";
             console.error(error);
         })
-        
 }
 
 function showSeries(liste) {
@@ -61,6 +62,7 @@ function showSeries(liste) {
     btn_precedent.hidden = page === 1;
     btn_suivant.hidden = page === total_pages;
     resultCount.textContent = `${pageOfSeries.length} séries affichées`
+
     pageOfSeries.forEach((serie) => {
         const article = createEl(
             "article",
@@ -219,8 +221,8 @@ function addSerie(){
     newSerie.id = Date.now();
     newSerie.name = nameInput.value.trim();
     newSerie.genres = [genreInput.value.trim()];
-    newSerie.image = { medium: URL.createObjectURL(imageInput.files[0]) }
-    // newSerie.image = pictureData ? { medium: pictureData } : null;
+    // newSerie.image = { medium: URL.createObjectURL(imageInput.files[0]) }
+    newSerie.image = { medium: pictureData };
     newSerie.summary = descInput.value.trim();
 
     console.log(newSerie);
@@ -230,6 +232,22 @@ function addSerie(){
     showSeries(series);
 }
 
+imageInput.addEventListener("change", function () {
+    const file = this.files[0];
+    pictureData = null; 
+
+    if (!file || !file.type.startsWith("image/")) {
+        return; 
+    }
+
+    const reader = new FileReader();
+    reader.onload = function (e) {
+        pictureData = reader.result;
+    };
+    reader.readAsDataURL(file);
+});
+
+
 let searchInput = document.getElementById("searchInput");
 
 function applySearch() {
@@ -238,6 +256,9 @@ function applySearch() {
     let filteredSeries = series.filter((serie) => {
         return (serie.name || "").toLowerCase().includes(text);
     });
+    if(!filteredSeries.length){
+        return [];
+    }
     return filteredSeries;
 }
 
@@ -257,6 +278,9 @@ function applyFilter(filtredArr) {
     } else {
         filteredSeries = filtredArr.filter((serie) => serie.genres.includes(genre));
     }
+    if(!filteredSeries.length){
+        return [];
+    }
     return filteredSeries;
 }
 
@@ -267,7 +291,9 @@ genreFilter.addEventListener("change", () => {
     showSeries(filtredArr);
 });
 
-document.getElementById("resetBtn").addEventListener("click", () => {
+let restBtn = document.getElementById("resetBtn")
+
+restBtn.addEventListener("click", () => {
     searchInput.value = "";
     genreFilter.value = "all";
     page = 1;
