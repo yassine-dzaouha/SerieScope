@@ -15,6 +15,7 @@ let genreFilter = document.getElementById("genreFilter")
 //     localStorage.setItem("page",1);
 // }
 // let page = Number(localStorage.getItem("page"));
+
 let page = 1;
 let pictureData = null;
 
@@ -33,11 +34,9 @@ if (saved) {
             showSeries(series);
         })
         .catch((error) => {
-            errorMessage.textContent =
-                "Impossible de charger le catalogue. Réessaie plus tard.";
+            errorMessage.textContent = "Impossible de charger le catalogue. Réessaie plus tard.";
             console.error(error);
         })
-        
 }
 
 function showSeries(liste) {
