@@ -139,6 +139,7 @@ function GetGenres() {
 }
 
 function AppendGenres() {
+    const current = genreFilter.value;   // remember the choice
     genreFilter.textContent = "";
 
     const TousOption = document.createElement("option");
@@ -146,13 +147,15 @@ function AppendGenres() {
     TousOption.value = "all";
     genreFilter.append(TousOption);
 
-    // const AllGenre = GetGenres();
-    GetGenres().forEach(genre => {
+    const allGenres = GetGenres();
+    allGenres.forEach(genre => {
         const option = document.createElement("option");
         option.value = genre;
         option.textContent = genre;
         genreFilter.append(option);
-    })
+    });
+
+    genreFilter.value = allGenres.includes(current) ? current : "all";
 }
 
 const form = document.querySelector("form");
