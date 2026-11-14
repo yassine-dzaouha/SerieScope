@@ -92,8 +92,15 @@ function showSeries(liste) {
             "line-clamp-2 text-[#8290A2] text-[12px]"
         );
         desc.innerHTML = serie.summary;
-        
-        corps.append(titre, genres,desc);
+        const detailsLink = createEl(
+            "a",
+            "mt-auto inline-block text-center bg-[#252525] text-white text-[14px] font-bold px-3 py-2 rounded-lg hover:bg-[#151414] focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-[#191919]",
+            "Voir les détails"
+        );
+        detailsLink.href = "details.html?id=" + serie.id;
+
+
+        corps.append(titre, genres,desc,detailsLink);
         article.append(image, corps);
         articles.append(article);
         AppendGenres();
