@@ -188,7 +188,8 @@ function validateForm() {
         isValid = false;
     }
 
-    if (file && !file.type.startsWith("image/")) {
+    if (!file) {
+        console.log(file)
         imageError.textContent = "Le fichier doit être une image.";
         isValid = false;
     }
