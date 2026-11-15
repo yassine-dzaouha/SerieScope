@@ -50,9 +50,9 @@ function showSeries(liste) {
 
     emptyMessage.hidden = true;
 
-    let total_pages = Math.ceil(liste.length / 15);
-    let debut = (page - 1) * 15;
-    let fin = debut + 15;
+    let total_pages = Math.ceil(liste.length / 20);
+    let debut = (page - 1) * 20;
+    let fin = debut + 20;
     let pageOfSeries = liste.slice(debut, fin);
 
     pagination.hidden = total_pages <= 1;
