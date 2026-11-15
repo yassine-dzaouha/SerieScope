@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Détails de la série | SérieScope</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+</head>
+
+<body class="text-[white] bg-[#111010]">
+
+    <header class="flex items-center justify-between pt-5 pb-5 px-[5%] bg-[#080808]">
+        <div class="flex gap-5 items-center">
+            <span class="bg-[white] px-2 py-1 rounded-lg"><i class="fa-solid fa-film" style="color: rgb(0, 0, 0);"></i></span>
+            <p class="text-2xl">SérieScope</p>
+        </div>
+    </header>
+
+    <main class="px-[5%] py-[3%]">
+
+        <a href="index.html"
+            class="inline-block mb-5 text-[14px] border border-[#393939] bg-[#191919] rounded-md px-3 py-2 hover:bg-[#252525] focus:outline-none focus:ring-2 focus:ring-white">
+            <i class="fa-solid fa-arrow-left mr-1"></i> Retour au catalogue
+        </a>
+
+        <!-- Message si la série n'existe pas -->
+        <p id="notFound" class="hidden text-red-400 text-[15px]" role="alert">
+            Série introuvable. Retourne au catalogue et réessaie.
+        </p>
+
+        <!-- Fiche détaillée -->
+        <article id="details" class="hidden grid grid-cols-1 md:grid-cols-[300px_1fr] gap-6">
+
+            <img id="poster" src="" alt=""
+                class="w-full max-w-[300px] aspect-[3/4] object-cover rounded-lg border border-[#393939] bg-[#252525]">
+
+            <div class="flex flex-col gap-4">
+                <h1 id="title" class="text-[28px] font-bold"></h1>
+
+                <div id="genres" class="flex flex-wrap gap-1"></div>
+
+                <div id="summary" class="text-[#8290A2] text-[14px] leading-6"></div>
+
+                <dl class="bg-[#191919] border border-[#393939] rounded-lg p-4 grid grid-cols-1 sm:grid-cols-2 gap-4 text-[14px]">
+                    <div>
+                        <dt class="text-[#8290A2] text-[12px]">Langue</dt>
+                        <dd id="language" class="font-bold"></dd>
+                    </div>
+                    <div>
+                        <dt class="text-[#8290A2] text-[12px]">Statut</dt>
+                        <dd id="status" class="font-bold"></dd>
+                    </div>
+                    <div>
+                        <dt class="text-[#8290A2] text-[12px]">Notation</dt>
+                        <dd id="rating" class="font-bold"></dd>
+                    </div>
+                    <div>
+                        <dt class="text-[#8290A2] text-[12px]">Pays</dt>
+                        <dd id="country" class="font-bold"></dd>
+                    </div>
+                </dl>
+            </div>
+        </article>
+
+    </main>
+
+    <script src="js/details.js"></script>
+</body>
+
+</html>

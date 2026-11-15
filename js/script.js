@@ -10,11 +10,14 @@ let btn_suivant = document.getElementById("btn-suivant");
 let resultCount = document.getElementById("resultCount");
 let genreFilter = document.getElementById("genreFilter")
 
+
 // if(!localStorage.getItem("page")){
 //     localStorage.setItem("page",1);
 // }
 // let page = Number(localStorage.getItem("page"));
+
 let page = 1;
+let pictureData = null;
 
 const saved = localStorage.getItem("series");
 if (saved) {
@@ -31,11 +34,9 @@ if (saved) {
             showSeries(series);
         })
         .catch((error) => {
-            errorMessage.textContent =
-                "Impossible de charger le catalogue. Réessaie plus tard.";
+            errorMessage.textContent = "Impossible de charger le catalogue. Réessaie plus tard.";
             console.error(error);
         })
-        
 }
 
 function showSeries(liste) {
@@ -49,9 +50,9 @@ function showSeries(liste) {
 
     emptyMessage.hidden = true;
 
-    let total_pages = Math.ceil(liste.length / 15);
-    let debut = (page - 1) * 15;
-    let fin = debut + 15;
+    let total_pages = Math.ceil(liste.length / 20);
+    let debut = (page - 1) * 20;
+    let fin = debut + 20;
     let pageOfSeries = liste.slice(debut, fin);
 
     pagination.hidden = total_pages <= 1;
@@ -61,6 +62,7 @@ function showSeries(liste) {
     btn_precedent.hidden = page === 1;
     btn_suivant.hidden = page === total_pages;
     resultCount.textContent = `${pageOfSeries.length} séries affichées`
+
     pageOfSeries.forEach((serie) => {
         const article = createEl(
             "article",
@@ -92,8 +94,15 @@ function showSeries(liste) {
             "line-clamp-2 text-[#8290A2] text-[12px]"
         );
         desc.innerHTML = serie.summary;
-        
-        corps.append(titre, genres,desc);
+        const detailsLink = createEl(
+            "a",
+            "mt-auto inline-block text-center bg-[#252525] text-white text-[14px] font-bold px-3 py-2 rounded-lg hover:bg-[#151414] focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-[#191919]",
+            "Voir les détails"
+        );
+        detailsLink.href = "details.html?id=" + serie.id;
+
+
+        corps.append(titre, genres,desc,detailsLink);
         article.append(image, corps);
         articles.append(article);
         AppendGenres();
@@ -132,6 +141,7 @@ function GetGenres() {
 }
 
 function AppendGenres() {
+    const current = genreFilter.value;   // remember the choice
     genreFilter.textContent = "";
 
     const TousOption = document.createElement("option");
@@ -139,13 +149,15 @@ function AppendGenres() {
     TousOption.value = "all";
     genreFilter.append(TousOption);
 
-    // const AllGenre = GetGenres();
-    GetGenres().forEach(genre => {
+    const allGenres = GetGenres();
+    allGenres.forEach(genre => {
         const option = document.createElement("option");
         option.value = genre;
         option.textContent = genre;
         genreFilter.append(option);
-    })
+    });
+
+    genreFilter.value = allGenres.includes(current) ? current : "all";
 }
 
 const form = document.querySelector("form");
@@ -181,7 +193,8 @@ function validateForm() {
         isValid = false;
     }
 
-    if (file && !file.type.startsWith("image/")) {
+    if (!file) {
+        console.log(file)
         imageError.textContent = "Le fichier doit être une image.";
         isValid = false;
     }
@@ -208,8 +221,8 @@ function addSerie(){
     newSerie.id = Date.now();
     newSerie.name = nameInput.value.trim();
     newSerie.genres = [genreInput.value.trim()];
-    newSerie.image = { medium: URL.createObjectURL(imageInput.files[0]) }
-    // newSerie.image = pictureData ? { medium: pictureData } : null;
+    // newSerie.image = { medium: URL.createObjectURL(imageInput.files[0]) }
+    newSerie.image = { medium: pictureData };
     newSerie.summary = descInput.value.trim();
 
     console.log(newSerie);
@@ -219,6 +232,22 @@ function addSerie(){
     showSeries(series);
 }
 
+imageInput.addEventListener("change", function () {
+    const file = this.files[0];
+    pictureData = null; 
+
+    if (!file || !file.type.startsWith("image/")) {
+        return; 
+    }
+
+    const reader = new FileReader();
+    reader.onload = function (e) {
+        pictureData = reader.result;
+    };
+    reader.readAsDataURL(file);
+});
+
+
 let searchInput = document.getElementById("searchInput");
 
 function applySearch() {
@@ -227,6 +256,9 @@ function applySearch() {
     let filteredSeries = series.filter((serie) => {
         return (serie.name || "").toLowerCase().includes(text);
     });
+    if(!filteredSeries.length){
+        return [];
+    }
     return filteredSeries;
 }
 
@@ -246,6 +278,9 @@ function applyFilter(filtredArr) {
     } else {
         filteredSeries = filtredArr.filter((serie) => serie.genres.includes(genre));
     }
+    if(!filteredSeries.length){
+        return [];
+    }
     return filteredSeries;
 }
 
@@ -256,7 +291,9 @@ genreFilter.addEventListener("change", () => {
     showSeries(filtredArr);
 });
 
-document.getElementById("resetBtn").addEventListener("click", () => {
+let restBtn = document.getElementById("resetBtn")
+
+restBtn.addEventListener("click", () => {
     searchInput.value = "";
     genreFilter.value = "all";
     page = 1;
