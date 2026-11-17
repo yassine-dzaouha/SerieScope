@@ -107,6 +107,15 @@
                 </div>
     
                 <p id="resultCount" class="text-[#8290A2] text-[12px] mt-4 mb-3" aria-live="polite"></p>
+                <div id="loadingMessage" role="status" aria-live="polite" class="m-5" hidden>
+                    <div class="flex items-center gap-3 text-[#8290A2] text-[15px]">
+                        <svg class="animate-spin h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" aria-hidden="true">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
+                        </svg>
+                        <span>Chargement du catalogue…</span>
+                    </div>
+                </div>
                 <p id="errorMessage" class="text-red-400 text-[15px] hidden" role="alert"></p>
                 <p id="emptyMessage" class="text-[#8290A2] text-[15px] hidden">Aucune série trouvée.</p>
     
