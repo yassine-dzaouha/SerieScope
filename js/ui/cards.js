@@ -2,10 +2,11 @@ import { articles, resultCount } from "./dom.js";
 
 export function showSeries(liste) {
     articles.textContent = "";
-
+    resultCount.textContent = `${liste.length} séries affichées`
     if (liste.length === 0) {
+        resultCount.textContent = `${liste.length} séries affichées`
         emptyMessage.hidden = false;
-        pagination.hidden = true;
+        // pagination.hidden = true;
         return;
     }
 
@@ -23,9 +24,11 @@ export function showSeries(liste) {
     // btn_precedent.hidden = page === 1;
     // btn_suivant.hidden = page === total_pages;
     
-    resultCount.textContent = `${liste.length} séries affichées`
+    
 
     liste.forEach((serie) => {
+        
+        
         const article = createEl(
             "article",
             "bg-[#191919] border border-[#393939] rounded-lg overflow-hidden flex flex-col"
@@ -69,6 +72,7 @@ export function showSeries(liste) {
         articles.append(article);
         // AppendGenres();
     });
+
 }
 
 
