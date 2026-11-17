@@ -1,9 +1,9 @@
 import { api } from "./api.js";
 
 
-export async function getAll(params = {}) {
+export async function getAll(params) {
     try{
-        const response = await api.get("/series", params);
+        const response = await api.get("/series", { params:params });
         return response.data;
     }catch (error){
         throw(error);
