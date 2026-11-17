@@ -1,7 +1,7 @@
 import { getAll } from "./services/serieService.js";
 import { state } from "./data/store.js";
 import { showSeries } from "./ui/cards.js";
-import { AppendGenres, AppendLanguages, applyFilters } from "./ui/filters.js";
+import { AppendGenres, AppendLanguages } from "./ui/filters.js";
 import { genreFilter, languageFilter, loadingMessage, searchInput } from "./ui/dom.js";
 
 function getParams() {
