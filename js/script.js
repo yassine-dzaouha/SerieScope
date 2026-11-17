@@ -1,3 +1,4 @@
+import {api} from "./services/api.js"
 let series = [];
 
 const errorMessage = document.getElementById("errorMessage");
@@ -19,25 +20,40 @@ let genreFilter = document.getElementById("genreFilter")
 let page = 1;
 let pictureData = null;
 
-const saved = localStorage.getItem("series");
-if (saved) {
-    series = JSON.parse(saved);
-    showSeries(series);
-} else {
-    fetch("https://api.tvmaze.com/shows?page=0")
-        .then((response) => {
-            return response.json();
-        })
-        .then((data) => {
-            series = data;
-            localStorage.setItem("series", JSON.stringify(series));
-            showSeries(series);
-        })
-        .catch((error) => {
-            errorMessage.textContent = "Impossible de charger le catalogue. Réessaie plus tard.";
-            console.error(error);
-        })
+// const saved = localStorage.getItem("series");
+// if (saved) {
+//     series = JSON.parse(saved);
+//     showSeries(series);
+// } else {
+//     fetch("https://api.tvmaze.com/shows?page=0")
+//         .then((response) => {
+//             return response.json();
+//         })
+//         .then((data) => {
+//             series = data;
+//             localStorage.setItem("series", JSON.stringify(series));
+//             showSeries(series);
+//         })
+//         .catch((error) => {
+//             errorMessage.textContent = "Impossible de charger le catalogue. Réessaie plus tard.";
+//             console.error(error);
+//         })
+        
+// }
+
+async function getAllSeries() {
+    try {
+        const response = await api.get("/");
+
+        console.log(response.data);
+        series = response.data;
+        showSeries(series)
+    } catch (error) {
+        console.log(error);
+    }
 }
+
+getAllSeries();
 
 function showSeries(liste) {
     articles.textContent = "";
