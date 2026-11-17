@@ -12,7 +12,11 @@ function GetGenres(list) {
 
 export function AppendGenres(list) {
     const current = genreFilter.value;
-
+    genreFilter.textContent = "";
+    const alloption = document.createElement("option");
+    alloption.textContent = "Tous les genres";
+    alloption.value = ""
+    genreFilter.append(alloption)
     const allGenres = GetGenres(list);
     allGenres.forEach(genre => {
         const option = document.createElement("option");
@@ -20,7 +24,7 @@ export function AppendGenres(list) {
         option.textContent = genre;
         genreFilter.append(option);
     });
-    genreFilter.value = allGenres.includes(current) ? current : "all";
+    genreFilter.value = allGenres.includes(current) ? current : "";
 }
 
 
@@ -36,7 +40,11 @@ function GetLanguages(list) {
 
 export function AppendLanguages(list) {
     const current = languageFilter.value;
-
+    languageFilter.textContent = "";
+    const alloption = document.createElement("option");
+    alloption.textContent = "Tous les genres";
+    alloption.value = ""
+    languageFilter.append(alloption)
     const AllLanguages = GetLanguages(list);
     AllLanguages.forEach(language => {
         const option = document.createElement("option");
@@ -44,5 +52,5 @@ export function AppendLanguages(list) {
         option.textContent = language;
         languageFilter.append(option);
     });
-    languageFilter.value = AllLanguages.includes(current) ? current : "all";
+    languageFilter.value = AllLanguages.includes(current) ? current : "";
 }
