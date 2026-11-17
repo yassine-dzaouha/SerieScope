@@ -1,12 +1,11 @@
 import { api } from "./api.js";
 
 
-export async function getAll() {
+export async function getAll(params) {
     try{
-        const response = await api.get("/series");
+        const response = await api.get("/series", { params:params });
         return response.data;
     }catch (error){
         throw(error);
     }
 }
-

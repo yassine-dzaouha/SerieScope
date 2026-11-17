@@ -77,7 +77,7 @@
                     <p class="text-[#8290A2] text-[12px]">Recherche par nom ou explore un genre.</p>
                 </div>
     
-                <div class="bg-[#191919] border border-[#393939] rounded-lg p-4 grid grid-cols-1 md:grid-cols-[1fr_1fr_auto] gap-3 items-end">
+                <div class="bg-[#191919] border border-[#393939] rounded-lg p-4 grid grid-cols-1 md:grid-cols-[1fr_1fr_1fr_auto] gap-3 items-end">
                     <div class="flex flex-col">
                         <label for="searchInput" class="mb-1 text-[14px] font-bold">Rechercher une série</label>
                         <input type="search" id="searchInput" placeholder="Ex. Breaking Bad"
@@ -91,6 +91,14 @@
                             <option value="all">Tous les genres</option>
                         </select>
                     </div>
+
+                    <div class="flex flex-col">
+                        <label for="languageFilter" class="mb-1 text-[14px] font-bold">language</label>
+                        <select id="languageFilter"
+                            class="border border-[#393939] bg-[#191919] rounded-md px-2 py-2 text-[15px] focus:outline-none focus:ring-2 focus:ring-white">
+                            <option value="all">Tous les language</option>
+                        </select>
+                    </div>
     
                     <button type="button" id="resetBtn"
                         class="border border-[#393939] bg-[#191919] rounded-md px-4 py-2 text-[15px] font-bold hover:bg-[#252525] focus:outline-none focus:ring-2 focus:ring-white">
@@ -99,6 +107,15 @@
                 </div>
     
                 <p id="resultCount" class="text-[#8290A2] text-[12px] mt-4 mb-3" aria-live="polite"></p>
+                <div id="loadingMessage" role="status" aria-live="polite" class="m-5" hidden>
+                    <div class="flex items-center gap-3 text-[#8290A2] text-[15px]">
+                        <svg class="animate-spin h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" aria-hidden="true">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
+                        </svg>
+                        <span>Chargement du catalogue…</span>
+                    </div>
+                </div>
                 <p id="errorMessage" class="text-red-400 text-[15px] hidden" role="alert"></p>
                 <p id="emptyMessage" class="text-[#8290A2] text-[15px] hidden">Aucune série trouvée.</p>
     
