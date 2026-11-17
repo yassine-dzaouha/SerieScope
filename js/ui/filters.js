@@ -1,4 +1,4 @@
-import { genreFilter } from "./dom.js";
+import { genreFilter, languageFilter,  } from "./dom.js";
 
 function GetGenres(list) {
     const AllGenres = [];
@@ -21,4 +21,28 @@ export function AppendGenres(list) {
         genreFilter.append(option);
     });
     genreFilter.value = allGenres.includes(current) ? current : "all";
+}
+
+
+function GetLanguages(list) {
+    const AllLanguages = [];
+    list.forEach((serie)=> {
+        if (!AllLanguages.includes(serie.language)){
+            AllLanguages.push(serie.language);
+        }
+    })
+    return AllLanguages;
+}
+
+export function AppendLanguages(list) {
+    const current = languageFilter.value;
+
+    const AllLanguages = GetLanguages(list);
+    AllLanguages.forEach(language => {
+        const option = document.createElement("option");
+        option.value = language;
+        option.textContent = language;
+        languageFilter.append(option);
+    });
+    languageFilter.value = AllLanguages.includes(current) ? current : "all";
 }
