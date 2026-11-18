@@ -1,8 +1,11 @@
-import { getAll } from "./services/serieService.js";
+import { create, getAll } from "./services/serieService.js";
 import { state } from "./data/store.js";
 import { showSeries } from "./ui/cards.js";
 import { AppendGenres, AppendLanguages } from "./ui/filters.js";
-import { genreFilter, languageFilter, loadingMessage, searchInput } from "./ui/dom.js";
+import { form, genreFilter, imageInput, languageFilter, loadingMessage, searchInput } from "./ui/dom.js";
+import { addSerie, validateForm } from "./ui/form.js";
+
+let pictureData = null;
 
 function getParams() {
     const params = {};
@@ -15,13 +18,11 @@ function getParams() {
 }
 
 async function loadSeries() {
-
     loadingMessage.hidden = false;
     try {
-        const response = await getAll(getParams());
+        const response = await getAll();
 
         state.series = response;
-
         console.log(state.series);
 
         showSeries(state.series);
@@ -30,7 +31,22 @@ async function loadSeries() {
 
     } catch (error) {
         console.error(error);
+    } finally {
+        loadingMessage.hidden = true;
+    }
+}
 
+async function loadFilters() {
+    loadingMessage.hidden = false;
+    try {
+        const response = await getAll(getParams());
+
+        state.series = response;
+        console.log(state.series);
+        showSeries(state.series);
+
+    } catch (error) {
+        console.error(error);
     } finally {
         loadingMessage.hidden = true;
     }
@@ -38,23 +54,24 @@ async function loadSeries() {
 
 async function init() {
     await loadSeries();
+    await loadFilters();
 }
 
-init()
+init();
 
 searchInput.addEventListener("input", () => {
     state.criteria.name = searchInput.value.trim();
-    loadSeries()
+    loadFilters();
 });
 
 genreFilter.addEventListener("change", () => {
     state.criteria.genre = genreFilter.value;
-    loadSeries();
+    loadFilters();
 });
 
 languageFilter.addEventListener("change", () => {
     state.criteria.language = languageFilter.value;
-    loadSeries();
+    loadFilters();
 });
 
 resetBtn.addEventListener("click", () => {
@@ -65,4 +82,23 @@ resetBtn.addEventListener("click", () => {
     loadSeries();
 });
 
+// imageInput.addEventListener("change", function () {
+//     const file = this.files[0];
+//     pictureData = null; 
 
+//     if (!file || !file.type.startsWith("image/")) {
+//         return; 
+//     }
+
+//     const reader = new FileReader();
+//     reader.onload = function (e) {
+//         pictureData = reader.result;
+//     };
+//     reader.readAsDataURL(file);
+// });
+
+form.addEventListener("submit", (event) => {
+    event.preventDefault(); 
+    addSerie();
+    showSeries(state.series);
+});
