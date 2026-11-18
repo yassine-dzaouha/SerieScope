@@ -16,8 +16,10 @@ export const nameInput = document.getElementById("seriesName");
 export const genreInput = document.getElementById("seriesGenre");
 export const imageInput = document.getElementById("seriesImage");
 export const descInput = document.getElementById("description");
+export const languageInput = document.getElementById("seriesLanguage");
 
 export const nameError = document.getElementById("seriesNameError");
 export const genreError = document.getElementById("seriesGenreError");
 export const imageError = document.getElementById("seriesImageError");
 export const descError = document.getElementById("seriesDescriptionError");
+export const languageErrorr = document.getElementById("seriesLanguageError");
