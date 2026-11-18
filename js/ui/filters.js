@@ -6,7 +6,7 @@ function GetGenres(list) {
         if (!AllGenres.includes(genre)){
             AllGenres.push(genre);
         } 
-    }))
+    }));
     return AllGenres;
 }
 
@@ -15,7 +15,7 @@ export function AppendGenres(list) {
     genreFilter.textContent = "";
     const alloption = document.createElement("option");
     alloption.textContent = "Tous les genres";
-    alloption.value = ""
+    alloption.value = "";
     genreFilter.append(alloption)
     const allGenres = GetGenres(list);
     allGenres.forEach(genre => {
@@ -25,26 +25,25 @@ export function AppendGenres(list) {
         genreFilter.append(option);
     });
     genreFilter.value = allGenres.includes(current) ? current : "";
-}
-
+};
 
 function GetLanguages(list) {
     const AllLanguages = [];
     list.forEach((serie)=> {
         if (!AllLanguages.includes(serie.language)){
             AllLanguages.push(serie.language);
-        }
-    })
+        };
+    });
     return AllLanguages;
-}
+};
 
 export function AppendLanguages(list) {
     const current = languageFilter.value;
     languageFilter.textContent = "";
     const alloption = document.createElement("option");
     alloption.textContent = "Tous les genres";
-    alloption.value = ""
-    languageFilter.append(alloption)
+    alloption.value = "";
+    languageFilter.append(alloption);
     const AllLanguages = GetLanguages(list);
     AllLanguages.forEach(language => {
         const option = document.createElement("option");
@@ -53,4 +52,4 @@ export function AppendLanguages(list) {
         languageFilter.append(option);
     });
     languageFilter.value = AllLanguages.includes(current) ? current : "";
-}
+};
