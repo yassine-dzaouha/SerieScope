@@ -1,6 +1,5 @@
 import { api } from "./api.js";
 
-
 export async function getAll(params) {
     try{
         const response = await api.get("/series", { params:params });
@@ -9,3 +8,9 @@ export async function getAll(params) {
         throw(error);
     }
 }
+
+export async function create(serie) {
+    const response = await api.post("/series", serie);
+    return response.data;
+}
+
