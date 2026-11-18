@@ -31,10 +31,10 @@
                     <h1 class="text-[25px] font-bold">Explore les séries TV</h1>
                     <p class="text-[12px] text-[#8290A2]">Retrouve tes séries préférées et enrichis le catalogue.</p>
                 </div>
-<form class="bg-[#191919] p-5 border border-[#393939] rounded-lg leading-7" >
+                <form class="bg-[#191919] p-5 border border-[#393939] rounded-lg leading-7" >
                     <div class="mb-3" >
                         <h3 id="form_title" class="text-[20px] font-medium">Ajouter une série</h3>
-                        <p class="text-[#8290A2] text-[10px]">Les champs marqués d’un * sont obligatoires.</p>
+                        <p class="text-[#8290A2] text-[10px]">Les champs marqués d'un * sont obligatoires.</p>
                     </div>
                     <div class="text-[11px] gap-3 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4">
                         <div class="flex flex-col xl:col-span-2">
@@ -47,7 +47,7 @@
                             <input type="text"  id="seriesGenre" class="border border-[#393939] bg-[#191919] rounded-md px-1 py-2" placeholder="Ex. Drame, Comédie">
                             <p id="seriesGenreError" class="text-red-400 text-[12px] font-normal min-h-[18px]" role="alert"></p>
                         </div>
-                        <div class="flex flex-col xl:col-span-2">
+                        <div class="flex flex-col md:col-span-4 xl:col-span-4">
                             <label class="mb-1">language*</label>
                             <select id="seriesLanguage" class="border border-[#393939] bg-[#191919] rounded-md px-2 py-3 text-[15px] focus:outline-none focus:ring-2 focus:ring-white">
                                 <option value="">Sélectionner une langue</option>
@@ -62,7 +62,7 @@
                             </select>
                             <p id="seriesLanguageError" class="text-red-400 text-[12px] font-normal min-h-[18px]" role="alert"></p>
                         </div>
-                        <div class="flex flex-col xl:col-span-2">
+                        <!-- <div class="flex flex-col xl:col-span-2">
                             <label for="seriesImage" class="mb-1">image *</label>
                             <input type="file" id="seriesImage" name="seriesImage" accept="image/*"
                                 aria-describedby="seriesImageError"
@@ -77,7 +77,7 @@
                             </label>
                             <textarea class="border border-[#393939] bg-[#191919] rounded-md px-2 py-2 " id="description" name="description"  placeholder="Résume la série en quelques mots…"></textarea>
                             <p id="seriesDescriptionError" class="text-red-400 text-[12px] font-normal min-h-[18px]" role="alert"></p>
-                        </div>
+                        </div> -->
                     </div>
                     <div class=" flex justify-start">
                         <button id="submit" class= "bg-[white] text-[11px]  text-black p-2 mt-3 rounded-lg ">
