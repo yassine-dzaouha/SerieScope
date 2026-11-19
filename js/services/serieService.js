@@ -10,7 +10,12 @@ export async function getAll(params) {
 }
 
 export async function create(serie) {
+    try{
     const response = await api.post("/series", serie);
     return response.data;
+    }
+    catch{
+        throw new Error("test");
+    }
 }
 
