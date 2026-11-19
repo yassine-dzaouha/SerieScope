@@ -1,4 +1,5 @@
-import { genreFilter, languageFilter,  } from "./dom.js";
+import { state } from "../data/store.js";
+import { genreFilter, languageFilter, searchInput,  } from "./dom.js";
 
 function GetGenres(list) {
     const AllGenres = [];
@@ -53,3 +54,19 @@ export function AppendLanguages(list) {
     });
     languageFilter.value = AllLanguages.includes(current) ? current : "";
 };
+
+export function getParams() {
+    const params = {};
+
+    if (state.criteria.name){
+        params.name = state.criteria.name;
+    }
+    if (state.criteria.genre) {
+        params.genre = state.criteria.genre;
+    }
+    if (state.criteria.language) {
+        params.language = state.criteria.language;
+    }
+
+    return params;
+}
