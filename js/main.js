@@ -1,21 +1,11 @@
 import { create, getAll } from "./services/serieService.js";
 import { state } from "./data/store.js";
 import { showSeries } from "./ui/cards.js";
-import { AppendGenres, AppendLanguages } from "./ui/filters.js";
+import { AppendGenres, AppendLanguages, getParams} from "./ui/filters.js";
 import { form, genreFilter, imageInput, languageFilter, loadingMessage, searchInput } from "./ui/dom.js";
 import { addSerie, validateForm } from "./ui/form.js";
 
-let pictureData = null;
-
-function getParams() {
-    const params = {};
-
-    if (state.criteria.name) params.name = state.criteria.name;
-    if (state.criteria.genre) params.genre = state.criteria.genre;
-    if (state.criteria.language) params.language = state.criteria.language;
-
-    return params;
-}
+// let pictureData = null;
 
 async function loadSeries() {
     loadingMessage.hidden = false;
@@ -38,6 +28,10 @@ async function loadSeries() {
 
 async function loadFilters() {
     loadingMessage.hidden = false;
+    localStorage.setItem("criteria", JSON.stringify(state.criteria));
+    searchInput.value = JSON.parse(localStorage.getItem("criteria")).name;
+    languageFilter.value = JSON.parse(localStorage.getItem("criteria")).language;
+    genreFilter.value = JSON.parse(localStorage.getItem("criteria")).genre;
     try {
         const response = await getAll(getParams());
 
@@ -54,7 +48,7 @@ async function loadFilters() {
 
 async function init() {
     await loadSeries();
-    await loadFilters();
+    loadFilters()
 }
 
 init();
@@ -79,6 +73,7 @@ resetBtn.addEventListener("click", () => {
     searchInput.value = "";
     genreFilter.value = "all";
     languageFilter.value = "all";
+    localStorage.setItem("criteria", JSON.stringify(state.criteria));
     loadSeries();
 });
 
@@ -87,7 +82,7 @@ resetBtn.addEventListener("click", () => {
 //     pictureData = null; 
 
 //     if (!file || !file.type.startsWith("image/")) {
-//         return; 
+//         return;
 //     }
 
 //     const reader = new FileReader();
@@ -97,8 +92,19 @@ resetBtn.addEventListener("click", () => {
 //     reader.readAsDataURL(file);
 // });
 
-form.addEventListener("submit", (event) => {
-    event.preventDefault(); 
-    addSerie();
-    showSeries(state.series);
+form.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    try{
+        let serie = addSerie()
+        let image = serie.image;
+        delete serie.image;
+        const response = await create(serie);
+        response.image = image;
+        state.series.push(response);
+        console.log(response);
+        showSeries(state.series);
+        form.reset();
+    } catch(error){
+        console.error(error);
+    }
 });
