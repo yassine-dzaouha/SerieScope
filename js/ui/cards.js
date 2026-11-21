@@ -66,8 +66,28 @@ export function showSeries(liste) {
         );
         detailsLink.href = "details.html?id=" + serie.id;
 
-
-        corps.append(titre, genres,desc,detailsLink);
+        const actionsDiv = createEl("div","flex justify-between","");
+        const editBtn = createEl("button",
+                "border border-red-500 text-red-400 text-[14px] font-bold px-3 py-2 rounded-lg hover:bg-red-500 hover:text-white focus:outline-none focus:ring-2 focus:ring-red-400",
+                "Supprimer"
+                );
+        editBtn.type = "button";
+        editBtn.dataset.action = "delete";
+        editBtn.dataset.id = serie.id;
+        editBtn.dataset.name = serie.name;
+        editBtn.setAttribute("aria-label", "modifier " + serie.name);
+        const deleteBtn = createEl("button",
+                "border border-red-500 text-red-400 text-[14px] font-bold px-3 py-2 rounded-lg hover:bg-red-500 hover:text-white focus:outline-none focus:ring-2 focus:ring-red-400",
+                "Supprimer"
+                );
+        deleteBtn.type = "button";
+        deleteBtn.dataset.action = "delete";
+        deleteBtn.dataset.id = serie.id;
+        deleteBtn.dataset.name = serie.name;
+        deleteBtn.setAttribute("aria-label", "Supprimer " + serie.name);
+        actionsDiv.append(editBtn, deleteBtn);
+        
+        corps.append(titre, genres,desc,detailsLink,actionsDiv);
         article.append(image, corps);
         articles.append(article);
         // AppendGenres();
