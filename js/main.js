@@ -1,4 +1,4 @@
-import { create, getAll } from "./services/serieService.js";
+import { remove,create, getAll } from "./services/serieService.js";
 import { state } from "./data/store.js";
 import { showSeries } from "./ui/cards.js";
 import { AppendGenres, AppendLanguages, getParams} from "./ui/filters.js";
@@ -108,3 +108,23 @@ form.addEventListener("submit", async (event) => {
         console.error(error);
     }
 });
+
+articles.addEventListener("click", async (event) => {
+    const button = event.target.closest("[data-remove]");
+    if (!button) {
+        return;
+    }
+    if(!confirm("are you sure ?")){
+        return
+    }
+    try {
+        await remove(button.dataset.remove);
+        init();
+    } catch (error) {
+        console.error(error);
+    }
+})
+
+
+
+

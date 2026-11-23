@@ -15,7 +15,14 @@ export async function create(serie) {
     return response.data;
     }
     catch{
-        throw new Error("test");
+        throw new Error("create error");
     }
 }
 
+export async function remove(id) {
+    try{
+        await api.delete(`/series/${id}`);
+    } catch{
+        throw new Error("delete error");
+    }
+}
