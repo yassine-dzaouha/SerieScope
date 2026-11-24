@@ -34,20 +34,35 @@
                 <form class="bg-[#191919] p-5 border border-[#393939] rounded-lg leading-7" >
                     <div class="mb-3" >
                         <h3 id="form_title" class="text-[20px] font-medium">Ajouter une série</h3>
-                        <p class="text-[#8290A2] text-[10px]">Les champs marqués d’un * sont obligatoires.</p>
+                        <p class="text-[#8290A2] text-[10px]">Les champs marqués d'un * sont obligatoires.</p>
                     </div>
-                    <div class="text-[11px] gap-3 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
-                        <div class="flex flex-col xl:col-span-1">
+                    <div class="text-[11px] gap-3 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4">
+                        <div class="flex flex-col xl:col-span-2">
                             <label class="mb-1">Nom de la série *</label>
                             <input type="text"  id="seriesName" class="border border-[#393939] bg-[#191919] rounded-md px-1 py-2" placeholder="Ex. The Bear">
                             <p id="seriesNameError" class="text-red-400 text-[12px] font-normal min-h-[18px]" role="alert"></p>
                         </div>
-                        <div class="flex flex-col xl:col-span-1">
+                        <div class="flex flex-col xl:col-span-2">
                             <label class="mb-1">Genre(s) *</label>
                             <input type="text"  id="seriesGenre" class="border border-[#393939] bg-[#191919] rounded-md px-1 py-2" placeholder="Ex. Drame, Comédie">
                             <p id="seriesGenreError" class="text-red-400 text-[12px] font-normal min-h-[18px]" role="alert"></p>
                         </div>
-                        <div class="flex flex-col xl:col-span-1">
+                        <div class="flex flex-col xl:col-span-2">
+                            <label class="mb-1">language*</label>
+                            <select id="seriesLanguage" class="border border-[#393939] bg-[#191919] rounded-md px-2 py-3 text-[15px] focus:outline-none focus:ring-2 focus:ring-white">
+                                <option value="">Sélectionner une langue</option>
+                                <option value="English">Anglais</option>
+                                <option value="French">Français</option>
+                                <option value="Spanish">Espagnol</option>
+                                <option value="Japanese">Japonais</option>
+                                <option value="Korean">Coréen</option>
+                                <option value="German">Allemand</option>
+                                <option value="Arabic">Arabe</option>
+                                <option value="Italian">Italien</option>
+                            </select>
+                            <p id="seriesLanguageError" class="text-red-400 text-[12px] font-normal min-h-[18px]" role="alert"></p>
+                        </div>
+                        <div class="flex flex-col xl:col-span-2">
                             <label for="seriesImage" class="mb-1">image *</label>
                             <input type="file" id="seriesImage" name="seriesImage" accept="image/*"
                                 aria-describedby="seriesImageError"
@@ -56,7 +71,7 @@
                                     focus:outline-none focus:ring-2 focus:ring-white">
                             <p id="seriesImageError" class="text-red-400 text-[12px] font-normal min-h-[18px]" role="alert"></p>
                         </div>
-                        <div class="flex flex-col xl:col-span-4">
+                        <div class="flex flex-col col-span-1 md:col-span-2 xl:col-span-4">
                             <label  class="mb-1 text-[11px]"  for="description">
                                 Description *
                             </label>
@@ -64,9 +79,12 @@
                             <p id="seriesDescriptionError" class="text-red-400 text-[12px] font-normal min-h-[18px]" role="alert"></p>
                         </div>
                     </div>
-                    <div class=" flex justify-start">
+                    <div class=" flex justify-start gap-4">
                         <button id="submit" class= "bg-[white] text-[11px]  text-black p-2 mt-3 rounded-lg ">
                             ＋ Ajouter la série
+                        </button>
+                        <button type="button" id="cancelBtn" hidden class="w-[100px] text-[11px] p-2 mt-3 rounded-lg  border border-[#393939] bg-[#191919] ">
+                            Annuler
                         </button>
                     </div>
                 </form>
@@ -77,7 +95,7 @@
                     <p class="text-[#8290A2] text-[12px]">Recherche par nom ou explore un genre.</p>
                 </div>
     
-                <div class="bg-[#191919] border border-[#393939] rounded-lg p-4 grid grid-cols-1 md:grid-cols-[1fr_1fr_auto] gap-3 items-end">
+                <div class="bg-[#191919] border border-[#393939] rounded-lg p-4 grid grid-cols-1 md:grid-cols-[1fr_1fr_1fr_auto] gap-3 items-end">
                     <div class="flex flex-col">
                         <label for="searchInput" class="mb-1 text-[14px] font-bold">Rechercher une série</label>
                         <input type="search" id="searchInput" placeholder="Ex. Breaking Bad"
@@ -91,6 +109,14 @@
                             <option value="all">Tous les genres</option>
                         </select>
                     </div>
+
+                    <div class="flex flex-col">
+                        <label for="languageFilter" class="mb-1 text-[14px] font-bold">language</label>
+                        <select id="languageFilter"
+                            class="border border-[#393939] bg-[#191919] rounded-md px-2 py-2 text-[15px] focus:outline-none focus:ring-2 focus:ring-white">
+                            <option value="all">Tous les language</option>
+                        </select>
+                    </div>
     
                     <button type="button" id="resetBtn"
                         class="border border-[#393939] bg-[#191919] rounded-md px-4 py-2 text-[15px] font-bold hover:bg-[#252525] focus:outline-none focus:ring-2 focus:ring-white">
@@ -99,13 +125,22 @@
                 </div>
     
                 <p id="resultCount" class="text-[#8290A2] text-[12px] mt-4 mb-3" aria-live="polite"></p>
+                <div id="loadingMessage" role="status" aria-live="polite" class="m-5" hidden>
+                    <div class="flex items-center gap-3 text-[#8290A2] text-[15px]">
+                        <svg class="animate-spin h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" aria-hidden="true">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
+                        </svg>
+                        <span>Chargement du catalogue…</span>
+                    </div>
+                </div>
                 <p id="errorMessage" class="text-red-400 text-[15px] hidden" role="alert"></p>
                 <p id="emptyMessage" class="text-[#8290A2] text-[15px] hidden">Aucune série trouvée.</p>
     
                 <div id="articles" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
 
                 </div>
-                <div id="pagination" class="flex flex-wrap items-center justify-between gap-3 mt-8" hidden>
+                <!-- <div id="pagination" class="flex flex-wrap items-center justify-between gap-3 mt-8" hidden>
                     <button id="btn-precedent" type="button" class="bg-[#242424] border border-[#383838] rounded-md px-4 py-2 text-sm">
                         Précédent
                     </button>
@@ -115,7 +150,7 @@
                     <button id="btn-suivant" type="button" class="bg-[#242424] border border-[#383838] rounded-md px-4 py-2 text-sm">
                         Suivant
                     </button>
-                </div>
+                </div> -->
         </section>
     </main>
 
@@ -124,8 +159,9 @@
 
 
 
-
-    <script src="js/script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <!-- <script type="module" src="js/script.js"></script> -->
+    <script type="module" src="js/main.js"></script>
 
    
 </body>
