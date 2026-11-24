@@ -1,6 +1,6 @@
 import { state } from "../data/store.js";
 import { create } from "../services/serieService.js";
-import { descError, descInput, form, genreError, genreInput, imageError, imageInput, languageErrorr, languageInput, nameError, nameInput } from "./dom.js";
+import { cancelBtn, descError, descInput, form, formTitle, genreError, genreInput, imageError, imageInput, languageErrorr, languageInput, nameError, nameInput, submitBtn } from "./dom.js";
 
 export function validateForm() {
     nameError.textContent = "";
@@ -31,7 +31,7 @@ export function validateForm() {
         isValid = false;
     }
 
-    if (!file) {
+    if (!file && !state.editingPicture) {
         console.log(file)
         imageError.textContent = "Le fichier doit être une image.";
         isValid = false;
@@ -55,8 +55,34 @@ export function addSerie(){
     newSerie.language = languageInput.value;
     newSerie.genres = genreInput.value.trim().split(",");
     newSerie.summary = descInput.value.trim();
-    newSerie.image = { original: URL.createObjectURL(imageInput.files[0]) }
+    if(state.editingId){
+        newSerie.image = {medium: state.editingPicture}
+    }else{
+        newSerie.image = {medium: URL.createObjectURL(imageInput.files[0])}
+    }
     // newSerie.image = { medium: picture };
     console.log(newSerie)
     return newSerie;
+}
+
+export function setEditMode(serie) {
+    state.editingId = serie.id;
+    formTitle.textContent = "Modifier une série";
+    submitBtn.textContent = "Enregistrer";
+    cancelBtn.hidden = false;
+
+    nameInput.value = serie.name || "";
+    languageInput.value = serie.language || "";
+    genreInput.value = serie.genres[0] || "";
+    descInput.value = serie.summary || "";
+    state.editingPicture = (serie.image && serie.image.original) || "";
+}
+
+export function setAddMode() {
+    state.editingPicture = null;
+    state.editingId = null;
+    formTitle.textContent = "Ajouter une série";
+    submitBtn.textContent = "Ajouter";
+    cancelBtn.hidden = true;
+    form.reset();
 }

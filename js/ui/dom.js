@@ -23,3 +23,7 @@ export const genreError = document.getElementById("seriesGenreError");
 export const imageError = document.getElementById("seriesImageError");
 export const descError = document.getElementById("seriesDescriptionError");
 export const languageErrorr = document.getElementById("seriesLanguageError");
+
+export const formTitle = document.getElementById("form_title");
+export const submitBtn = document.getElementById("submit");
+export const cancelBtn = document.getElementById("cancelBtn");

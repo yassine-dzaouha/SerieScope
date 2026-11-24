@@ -26,3 +26,13 @@ export async function remove(id) {
         throw new Error("delete error");
     }
 }
+
+export async function getById(id) {
+    const response = await api.get(`/series/${id}`);
+    return response.data;
+}
+
+export async function update(id, data) {
+    const response = await api.put(`/series/${id}`, data);
+    return response.data;
+}

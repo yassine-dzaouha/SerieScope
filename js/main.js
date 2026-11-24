@@ -1,9 +1,9 @@
-import { remove,create, getAll } from "./services/serieService.js";
+import { remove,create, getAll, getById, update } from "./services/serieService.js";
 import { state } from "./data/store.js";
 import { showSeries } from "./ui/cards.js";
 import { AppendGenres, AppendLanguages, getParams} from "./ui/filters.js";
 import { form, genreFilter, imageInput, languageFilter, loadingMessage, searchInput } from "./ui/dom.js";
-import { addSerie, validateForm } from "./ui/form.js";
+import { addSerie, setAddMode, setEditMode, validateForm } from "./ui/form.js";
 
 // let pictureData = null;
 
@@ -94,37 +94,63 @@ resetBtn.addEventListener("click", () => {
 
 form.addEventListener("submit", async (event) => {
     event.preventDefault();
+            
+    let serie = addSerie()
+
     try{
-        let serie = addSerie()
-        let image = serie.image;
-        delete serie.image;
-        const response = await create(serie);
-        response.image = image;
-        state.series.push(response);
-        console.log(response);
-        showSeries(state.series);
-        form.reset();
+        if (state.editingId) {
+            await update(state.editingId, serie); 
+            setAddMode();
+            init();
+        } else {
+            let image = serie.image;
+            delete serie.image;
+            const response = await create(serie);
+            response.image = image;
+            state.series.push(response);
+            console.log(response);
+            showSeries(state.series);
+            form.reset();
+        }
     } catch(error){
         console.error(error);
     }
 });
 
 articles.addEventListener("click", async (event) => {
-    const button = event.target.closest("[data-remove]");
-    if (!button) {
-        return;
+    const editButton = event.target.closest("[data-edit]");
+    const removeButton = event.target.closest("[data-remove]");
+
+    
+    
+    if (removeButton) {
+        if(!confirm("are you sure ?")){
+            return;
+        }
+        try {
+            await remove(removeButton.dataset.remove);
+            init();
+        } catch (error) {
+            console.error(error);
+        }
     }
-    if(!confirm("are you sure ?")){
-        return
-    }
-    try {
-        await remove(button.dataset.remove);
-        init();
-    } catch (error) {
-        console.error(error);
+    
+    if (editButton) {
+        if(!confirm("are you sure ?")){
+            return;
+        }
+        try {
+            const serie = await getById(editButton.dataset.edit);
+            setEditMode(serie);
+        } catch (error) {
+            console.error(error)
+        }
     }
 })
 
-
+cancelBtn.addEventListener("click", (e)=>{
+    e.preventDefault()
+    setAddMode();
+});
 
 
