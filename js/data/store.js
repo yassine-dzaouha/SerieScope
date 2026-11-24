@@ -7,5 +7,7 @@ if(!saved){
 
 export const state = {
     series: [],
-    criteria: saved
+    criteria: saved,
+    editingId: null,
+    editingPicture: null
 };
